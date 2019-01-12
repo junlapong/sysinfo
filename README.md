@@ -2,6 +2,8 @@
 
 Prints some system information (CPU usage, temperature, ..) and updates it in real time.
 
+> Only on Linux-based OS since it uses files in `/proc/` and `/sys/`.
+
 To run it:
 
 ```sh
