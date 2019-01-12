@@ -4,7 +4,7 @@ Prints some system information (CPU usage, temperature, ..) and updates it in re
 
 > Only on Linux-based OS since it uses files in `/proc/` and `/sys/`.
 
-To run it:
+To run it directly on your machine:
 
 ```sh
 go run sysinfo.go
@@ -20,7 +20,23 @@ Memory Usage: 30.6%
 CPU Temperature: 44℃
 ```
 
-> Ctrl+C to exit it.
+> Ctrl+C to exit the program.
+
+### Docker
+
+If you don't have Go on your machine, you can also use it with Docker, by using the image from my Docker Hub:
+
+```sh
+docker run -it jbdrvl/sysinfo:latest
+```
+
+Or you can build the image yourself with the Dockerfile:
+
+```sh
+git pull https://github.com/jbdrvl/sysinfo.git sysinfo
+cd ./sysinfo
+docker build -t sysinfo . && docker run -it sysinfo
+```
 
 ### Requirement: `goterm`
 
