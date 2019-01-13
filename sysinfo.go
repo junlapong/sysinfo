@@ -23,6 +23,11 @@ func main() {
 	num_CPU := runtime.NumCPU()
 	tm.MoveCursor(1,1)
 	tm.Println("Nbr of CPU(s):", num_CPU)
+	_, err := os.Stat("/sys/class/thermal/thermal_zone0/temp")
+	check_temp := false
+	if err == nil {
+		check_temp = true
+	}
 	file, err := os.Open("/proc/stat")
 	check(err)
 	reader := bufio.NewReader(file)
@@ -35,8 +40,6 @@ func main() {
 		var new_cpu_val = cpu_val {idle, total}
 		cpu_infos_prev = append(cpu_infos_prev, new_cpu_val)
 	}
-	var mem_percentage float64
-	var temp int
 	for {
 		time.Sleep(1 * time.Second)
 		file, err = os.Open("/proc/stat")
@@ -45,12 +48,14 @@ func main() {
 		reader.ReadString('\n')
 		for i:=0; i<num_CPU; i++ {
 			if i==0 {
-				mem_percentage = getMemInfo()
+				mem_percentage := getMemInfo()
 				tm.MoveCursor(1, num_CPU+2)
 				tm.Printf("Memory Usage: %.1f%%  ", mem_percentage)
-				temp = getTemp()
-				tm.MoveCursor(1, num_CPU+3)
-				tm.Printf("CPU Temperature: %d\u2103 ", temp)
+				if check_temp {
+					temp := getTemp()
+					tm.MoveCursor(1, num_CPU+3)
+					tm.Printf("CPU Temperature: %d\u2103 ", temp)
+				}
 			}
 			cpu_line, err := reader.ReadString('\n')
 			check(err)
@@ -63,7 +68,10 @@ func main() {
 			tm.MoveCursor(1, i+2)
 			tm.Printf("CPU %d: %.1f%%  ", i+1, percentage)
 		}
-		tm.Printf("\n\n\n")
+		tm.Printf("\n\n")
+		if check_temp {
+			tm.Printf("\n")
+		}
 		tm.Flush()
 	}
 }
@@ -132,7 +140,7 @@ func toBytes(num float64, unit string) (float64, error) {
 	if unit == "GB" {
 		return num*1000000000.0, nil
 	}
-	return 0, fmt.Errorf("UNKNOWN %s UNIT - Add it to the toBytes function?\n", unit)
+	return 0, fmt.Errorf("UNKNOWN UNIT %s - Contribute and add it to the toBytes function?\n", unit)
 }
 
 /* TEMPERATURE */

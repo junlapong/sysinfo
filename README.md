@@ -4,6 +4,8 @@ Prints some system information (CPU usage, temperature, ..) and updates it in re
 
 > Only on Linux-based OS since it uses files in `/proc/` and `/sys/`.
 
+## Running the script
+
 To run it directly on your machine:
 
 ```sh
@@ -22,9 +24,17 @@ CPU Temperature: 44℃
 
 > Ctrl+C to exit the program.
 
-### Docker
+__Requirement:__ `goterm`
 
-If you don't have Go on your machine, you can also use it with Docker, by using the image from my Docker Hub:
+`sysinfo` uses [goterm](https://github.com/buger/goterm) to display the information. To get it:
+
+```sh
+go get github.com/buger/goterm
+```
+
+### Using Docker
+
+If you don't have Go on your machine, you can also use this script through Docker, by pulling the image from my Docker Hub:
 
 ```sh
 docker run -it jbdrvl/sysinfo:latest
@@ -33,15 +43,7 @@ docker run -it jbdrvl/sysinfo:latest
 Or you can build the image yourself with the Dockerfile:
 
 ```sh
-git pull https://github.com/jbdrvl/sysinfo.git sysinfo
-cd ./sysinfo
+git pull https://github.com/jbdrvl/sysinfo.git
+cd sysinfo
 docker build -t sysinfo . && docker run -it sysinfo
-```
-
-### Requirement: `goterm`
-
-`sysinfo` uses [goterm](https://github.com/buger/goterm) to display the information. To get it:
-
-```sh
-go get github.com/buger/goterm
 ```
