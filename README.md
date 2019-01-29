@@ -24,6 +24,8 @@ CPU Temperature: 44℃
 
 > Ctrl+C to exit the program.
 
+(Or `go build sysinfo.go && ./sysinfo`)
+
 __Requirement:__ `goterm`
 
 `sysinfo` uses [goterm](https://github.com/buger/goterm) to display the information. To get it:
