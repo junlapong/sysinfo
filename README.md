@@ -36,13 +36,13 @@ go get github.com/buger/goterm
 
 ### Using Docker
 
-If you don't have Go on your machine, you can also use this script through Docker, by pulling the image from my Docker Hub:
+If you don't have Go on your machine, you can also use this script through Docker, by pulling the image from my Docker Hub (built on/for `x86_64`):
 
 ```sh
 docker run -it jbdrvl/sysinfo:latest
 ```
 
-Or you can build the image yourself with the Dockerfile:
+Or you can build the image yourself with the Dockerfile (especially if you're on an `arm` architecture since the `x86_64` image won't work):
 
 ```sh
 git pull https://github.com/jbdrvl/sysinfo.git
